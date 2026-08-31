@@ -1,0 +1,17 @@
+{
+  "targets": {
+    "default": {
+      "resources": {
+        "runtimes": {
+          "MonitoringAgent": {
+            "runtimeId": "MonitoringAgent_MonitoringAgent-M7B5fX2eSq",
+            "runtimeArn": "arn:aws:bedrock-agentcore:us-east-1:964217566728:runtime/MonitoringAgent_MonitoringAgent-M7B5fX2eSq",
+            "roleArn": "arn:aws:iam::964217566728:role/AgentCore-MonitoringAgent-ApplicationAgentMonitorin-6mlvUCISV1F3"
+          }
+        },
+        "stackName": "AgentCore-MonitoringAgent-default",
+        "deployHash": "22fe08a121e858ab"
+      }
+    }
+  }
+}

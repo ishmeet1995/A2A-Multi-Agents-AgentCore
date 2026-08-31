@@ -1,0 +1,17 @@
+{
+  "targets": {
+    "default": {
+      "resources": {
+        "runtimes": {
+          "RemediationAgent": {
+            "runtimeId": "RemediationAgent_RemediationAgent-iShjBO5ZV9",
+            "runtimeArn": "arn:aws:bedrock-agentcore:us-east-1:964217566728:runtime/RemediationAgent_RemediationAgent-iShjBO5ZV9",
+            "roleArn": "arn:aws:iam::964217566728:role/AgentCore-RemediationAgen-ApplicationAgentRemediati-uku0TgZSOVWE"
+          }
+        },
+        "stackName": "AgentCore-RemediationAgent-default",
+        "deployHash": "ec6a49f48b102498"
+      }
+    }
+  }
+}

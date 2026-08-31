@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "RemediationAgent",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "RemediationAgent"
+  },
+  "runtimes": [
+    {
+      "name": "RemediationAgent",
+      "build": "Container",
+      "entrypoint": "main.py",
+      "codeLocation": "app/RemediationAgent/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "A2A",
+      "envVars": [
+        {"name": "KNOWLEDGE_BASE_ID", "value": "BKXMFCORNT"},
+        {"name": "AWS_REGION", "value": "us-east-1"},
+        {"name": "HARNESS_ARN", "value": "arn:aws:bedrock-agentcore:us-east-1:964217566728:harness/NotificationAgent_NotificationAgent-sg7vEWVviO"}
+      ]
+    }
+  ],
+  "memories": [],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [],
+  "datasets": [],
+  "payments": []
+}

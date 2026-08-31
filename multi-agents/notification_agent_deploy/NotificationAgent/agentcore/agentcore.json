@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "NotificationAgent",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "NotificationAgent"
+  },
+  "runtimes": [],
+  "memories": [],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [
+    {
+      "name": "NotificationGateway",
+      "protocolType": "MCP",
+      "description": "Gateway for NotificationGateway",
+      "targets": [
+        {
+          "name": "NotificationTools",
+          "targetType": "lambdaFunctionArn",
+          "lambdaFunctionArn": {
+            "lambdaArn": "arn:aws:lambda:us-east-1:964217566728:function:send-escalation-notification",
+            "toolSchemaFile": "../../notification_lambda/tools.json"
+          }
+        }
+      ],
+      "authorizerType": "AWS_IAM",
+      "enableSemanticSearch": true,
+      "exceptionLevel": "NONE"
+    }
+  ],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [
+    {
+      "name": "NotificationAgent",
+      "path": "app/NotificationAgent"
+    }
+  ],
+  "datasets": [],
+  "payments": []
+}

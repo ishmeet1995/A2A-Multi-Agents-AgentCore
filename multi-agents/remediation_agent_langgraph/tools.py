@@ -88,18 +88,70 @@ def scale_out(alarm_name: str) -> dict:
     }
 
 
-def escalate_to_human(alarm_name: str, reason: str) -> dict:
+def escalate_to_human(alarm_name: str, reason: str, severity: str = "warning") -> dict:
     """
-    Mock escalation: page/notify a human instead of auto-remediating.
+    Escalation: calls the Harness-based Notification Agent to format and
+    send the page. Falls back to a local mock if the harness isn't
+    reachable (no AWS configured, invocation not yet authorized, harness
+    not yet created) — so local dev and testing keep working either way.
 
-    Real version: an AgentCore Gateway tool backed by a Lambda that posts
-    to a paging system (PagerDuty/Opsgenie API, or an SNS topic feeding
-    Slack) with the alarm and diagnosis attached.
+    HARNESS_ARN env var must be set to actually invoke the real harness;
+    see notification_lambda/README.md for how to create it.
     """
+    harness_arn = os.environ.get("HARNESS_ARN")
+    if not harness_arn:
+        return _escalate_mock(alarm_name, reason, "no HARNESS_ARN configured")
+
+    try:
+        import boto3
+
+        client = boto3.client("bedrock-agentcore", region_name=os.environ.get("AWS_REGION", "us-east-1"))
+        response = client.invoke_harness(
+            harnessArn=harness_arn,
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "text": (
+                                f"Alarm: {alarm_name}\nReason: {reason}\nSeverity: {severity}\n"
+                                "Format and send this escalation notification."
+                            )
+                        }
+                    ],
+                }
+            ],
+        )
+        # InvokeHarness streams events; for a simple case, collect the final text.
+        detail = _extract_harness_response_text(response)
+        return {
+            "action": "escalate_to_human",
+            "target": alarm_name,
+            "status": "escalated",
+            "detail": detail or f"Harness invoked for {alarm_name}, no text response parsed",
+        }
+    except Exception as e:
+        return _escalate_mock(alarm_name, reason, f"harness call failed: {e}")
+
+
+def _escalate_mock(alarm_name: str, reason: str, fallback_note: str) -> dict:
     time.sleep(0.1)
     return {
         "action": "escalate_to_human",
         "target": alarm_name,
         "status": "escalated",
-        "detail": f"[MOCK] Paged on-call for {alarm_name}. Reason: {reason}",
+        "detail": f"[MOCK, {fallback_note}] Paged on-call for {alarm_name}. Reason: {reason}",
     }
+
+
+def _extract_harness_response_text(response) -> str:
+    """Best-effort extraction of text content from an InvokeHarness event stream."""
+    try:
+        chunks = []
+        for event in response.get("stream", []):
+            delta = event.get("contentBlockDelta", {}).get("delta", {})
+            if "text" in delta:
+                chunks.append(delta["text"])
+        return "".join(chunks)
+    except Exception:
+        return ""

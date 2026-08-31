@@ -1,0 +1,35 @@
+{
+  "targets": {
+    "default": {
+      "resources": {
+        "mcp": {
+          "gateways": {
+            "NotificationGateway": {
+              "gatewayId": "notificationagent-notificationgateway-p7bmtdd7lw",
+              "gatewayArn": "arn:aws:bedrock-agentcore:us-east-1:964217566728:gateway/notificationagent-notificationgateway-p7bmtdd7lw",
+              "gatewayUrl": "https://notificationagent-notificationgateway-p7bmtdd7lw.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp",
+              "targets": {
+                "NotificationTools": {
+                  "targetId": "9A3QSX3QQL"
+                }
+              }
+            }
+          }
+        },
+        "harnesses": {
+          "NotificationAgent": {
+            "harnessId": "NotificationAgent_NotificationAgent-sg7vEWVviO",
+            "harnessArn": "arn:aws:bedrock-agentcore:us-east-1:964217566728:harness/NotificationAgent_NotificationAgent-sg7vEWVviO",
+            "roleArn": "arn:aws:iam::964217566728:role/NotificationAgent_NotificationAgent",
+            "status": "READY",
+            "harnessVersion": 2,
+            "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-east-1:964217566728:runtime/harness_NotificationAgent_NotificationAgent-DuuFmRBwdE",
+            "provisioner": "cloudformation"
+          }
+        },
+        "stackName": "AgentCore-NotificationAgent-default",
+        "deployHash": "c34be3c4ac591f12"
+      }
+    }
+  }
+}

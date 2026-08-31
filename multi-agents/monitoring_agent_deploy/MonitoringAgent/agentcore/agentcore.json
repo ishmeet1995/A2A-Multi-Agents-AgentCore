@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "MonitoringAgent",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "MonitoringAgent"
+  },
+  "runtimes": [
+    {
+      "name": "MonitoringAgent",
+      "build": "CodeZip",
+      "entrypoint": "main.py",
+      "codeLocation": "app/MonitoringAgent/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "envVars": [
+        {"name": "KNOWLEDGE_BASE_ID", "value": "BKXMFCORNT"},
+        {"name": "AWS_REGION", "value": "us-east-1"},
+        {"name": "REMEDIATION_AGENT_RUNTIME_ARN", "value": "arn:aws:bedrock-agentcore:us-east-1:964217566728:runtime/RemediationAgent_RemediationAgent-iShjBO5ZV9"}
+      ]
+    }
+  ],
+  "memories": [],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [],
+  "datasets": [],
+  "payments": []
+}

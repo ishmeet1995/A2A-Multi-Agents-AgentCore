@@ -1,0 +1,24 @@
+[
+  {
+    "name": "send_notification",
+    "description": "Sends an escalation notification for a cloud ops alarm. Given an alarm name, a reason, and a severity level, formats and sends a page to the on-call channel.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "alarm_name": {
+          "type": "string",
+          "description": "The CloudWatch alarm name, e.g. 'disk-space-low-db-02'"
+        },
+        "reason": {
+          "type": "string",
+          "description": "One or two sentence explanation of why this is being escalated, grounded in the runbook"
+        },
+        "severity": {
+          "type": "string",
+          "description": "Either 'critical' or 'warning' — determines which channel the notification is sent to"
+        }
+      },
+      "required": ["alarm_name", "reason", "severity"]
+    }
+  }
+]
